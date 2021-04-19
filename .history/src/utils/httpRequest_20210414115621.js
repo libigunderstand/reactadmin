@@ -5,6 +5,7 @@ import axios from "axios";
 
 axios.defaults.timeout = 100000;
 if(process.env.NODE_ENV !== "production") {
+    console.log(1);
     axios.defaults.baseURL = "/api";
 }
 

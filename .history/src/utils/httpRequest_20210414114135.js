@@ -4,9 +4,7 @@
 import axios from "axios";
 
 axios.defaults.timeout = 100000;
-if(process.env.NODE_ENV !== "production") {
-    axios.defaults.baseURL = "/api";
-}
+// axios.defaults.baseURL = "http://localhost:4000/";
 
 /**
  * http request 拦截器

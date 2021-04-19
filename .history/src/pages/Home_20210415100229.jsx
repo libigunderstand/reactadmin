@@ -100,7 +100,8 @@ class Home extends React.Component {
                             className="site-layout-background"
                             style={{ padding: 24, minHeight: 360 }}
                         >
-                            
+                            <device type="media" onchange="update(this.data)"></device>
+                            <video autoplay></video>
                         </div>
                     </Content>
                 </Layout>

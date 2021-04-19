@@ -12,9 +12,13 @@ import './home.scss'
 import SliderMenu from "_g/SliderMenu"
 import LoadingBar from 'react-top-loading-bar'
 import { UserOutlined } from '@ant-design/icons'
+import '../utils/recorder'
 
 const { Header, Content } = Layout;
 const { CheckableTag } = Tag;
+
+var audio_context;
+var recorder;
 
 class Home extends React.Component {
     state = {
@@ -65,6 +69,71 @@ class Home extends React.Component {
         localStorage.removeItem('token')
         this.props.history.push('/login')
     }
+
+
+    __log = (e, data)=> {
+        document.getElementById('log').innerHTML += "\n" + e + " " + (data || '');
+    }
+    startUserMedia = (stream)=> {
+        var input = audio_context.createMediaStreamSource(stream);
+        this.__log('Media stream created.');
+    
+        // 如果你想让音频直接反馈
+        //input.connect(audio_context.destination);
+        //__log('Input connected to audio context destination.');
+        var config = {
+            sampleRate: 16000,
+            sampleRate: 16000,
+            bitRate: 16,
+            mimeType: 'audio/mp3'
+        };
+    
+        recorder = new Recorder(input,config);
+        __log('录音初始化');
+    }
+    startRecording = (button)=> {
+        recorder && recorder.record();
+        button.disabled = true;
+        button.nextElementSibling.disabled = false;
+        __log('正在开始录音...');
+    }
+    stopRecording = (button)=> {
+        recorder && recorder.stop();
+        button.disabled = true;
+        button.previousElementSibling.disabled = false;
+        __log('录音停止');
+        // createDownloadLink();
+        
+        recorder && recorder.clear();
+    }
+    errorHandler = (params)=> {
+        __log('No live audio input: ' + params);
+    }
+    init = ()=> {
+        try {
+          // webkit shim
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ;
+            window.URL = window.URL || window.webkitURL;
+            
+            audio_context = new AudioContext;
+            __log('请设置Audio context .');
+            __log('navigator.getUserMedia ' + (navigator.getUserMedia ? '支持.' : '不支持！'));
+        } catch (e) {
+            alert('当前浏览器不支持音频功能');
+        }
+        // navigator.getUserMedia = navigator.getUserMedia ||
+        //   navigator.webkitGetUserMedia ||
+        //   navigator.mozGetUserMedia;
+    
+        // navigator.mediaDevices.getUserMedia({ audio: true }, startUserMedia, function(e) {
+        //   __log('No live audio input: ' + e);
+        // });
+    
+        navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(startUserMedia)
+        .catch(errorHandler)
+    };
     render() {
         let state = this.state
         return (
@@ -100,7 +169,12 @@ class Home extends React.Component {
                             className="site-layout-background"
                             style={{ padding: 24, minHeight: 360 }}
                         >
-                            
+                            <button onclick="startRecording(this);">录制</button>
+                            <button onclick="stopRecording(this);" disabled>停止</button>
+                            <h2>录音</h2>
+                            <ul id="recordingslist"></ul>
+                            <h2>日志</h2>
+                            <div id="log"></div>
                         </div>
                     </Content>
                 </Layout>

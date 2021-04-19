@@ -100,7 +100,7 @@ class Home extends React.Component {
                             className="site-layout-background"
                             style={{ padding: 24, minHeight: 360 }}
                         >
-                            
+                        <input type="file" accept="audio/*;capture=microphone" />
                         </div>
                     </Content>
                 </Layout>

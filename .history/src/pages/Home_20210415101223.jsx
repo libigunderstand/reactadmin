@@ -100,7 +100,12 @@ class Home extends React.Component {
                             className="site-layout-background"
                             style={{ padding: 24, minHeight: 360 }}
                         >
-                            
+                            <button onclick="startRecording(this);">录制</button>
+                            <button onclick="stopRecording(this);" disabled>停止</button>
+                            <h2>录音</h2>
+                            <ul id="recordingslist"></ul>
+                            <h2>日志</h2>
+                            <pre id="log"></pre>
                         </div>
                     </Content>
                 </Layout>

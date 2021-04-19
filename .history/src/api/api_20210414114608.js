@@ -23,7 +23,7 @@ const API = {
             let result = http({ 
                 method: 'post', 
                 param: data,
-                url: '/users/usersignup'
+                url: '/api/users/usersignup'
             })
             if(result){
                 return result;

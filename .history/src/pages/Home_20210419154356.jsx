@@ -16,6 +16,9 @@ import { UserOutlined } from '@ant-design/icons'
 const { Header, Content } = Layout;
 const { CheckableTag } = Tag;
 
+var audio_context;
+var recorder;
+
 class Home extends React.Component {
     state = {
         progress: 0,
@@ -100,7 +103,12 @@ class Home extends React.Component {
                             className="site-layout-background"
                             style={{ padding: 24, minHeight: 360 }}
                         >
-                            
+                            <button onclick="startRecording(this);">录制</button>
+                            <button onclick="stopRecording(this);" disabled>停止</button>
+                            <h2>录音</h2>
+                            <ul id="recordingslist"></ul>
+                            <h2>日志</h2>
+                            <div id="log"></div>
                         </div>
                     </Content>
                 </Layout>

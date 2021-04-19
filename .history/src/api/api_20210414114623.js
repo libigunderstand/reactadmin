@@ -6,7 +6,7 @@ const API = {
             let result = http({ 
                 method: 'post', 
                 param: data,
-                url: '/users/userlogin'
+                url: '/api/users/userlogin'
             })
             if(result){
                 return result;
@@ -23,7 +23,7 @@ const API = {
             let result = http({ 
                 method: 'post', 
                 param: data,
-                url: '/users/usersignup'
+                url: '/api/users/usersignup'
             })
             if(result){
                 return result;

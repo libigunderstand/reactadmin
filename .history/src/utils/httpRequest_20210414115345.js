@@ -4,9 +4,8 @@
 import axios from "axios";
 
 axios.defaults.timeout = 100000;
-if(process.env.NODE_ENV !== "production") {
-    axios.defaults.baseURL = "/api";
-}
+console.log(progress);
+axios.defaults.baseURL = "/api";
 
 /**
  * http request 拦截器

@@ -40,7 +40,7 @@ class Login extends Component {
         if(resdata.result) {
             if(resdata.result.flag === 1) {
                 this.openNotificationWithIcon('success','登录成功！','用户登录成功！')
-                sessionStorage.setItem("token", resdata.result.userinfo.token)
+                localStorage.setItem("token", resdata.result.userinfo.token)
                 this.props.history.push('/home')
             }else {
                 this.openNotificationWithIcon('error','登录失败！','用户名密码错误！')
